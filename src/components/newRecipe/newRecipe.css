@@ -1,0 +1,33 @@
+.btn-agregar-receta {
+    background-color: #ff6347;
+}
+
+.btn-agregar-receta:hover {
+    background-color: #f57e69;
+}
+
+.error-create-recipe {
+    background-color: #ee3131;
+    color: white;
+    padding: 15px;
+    display: flex;
+    border-radius: 4px;
+}
+
+.error-create-recipe button{
+    color: #ee3131;
+    border: none;
+    padding: 0px 7px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 280ms;
+}
+
+.error-create-recipe button:hover {
+    background-color: #ef6d6d;
+    color: white;
+    transition: 280ms;
+
+}
+

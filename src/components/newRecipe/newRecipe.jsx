@@ -1,27 +1,26 @@
 import { Button, Modal } from 'antd';
 import { useState } from "react";
-
+import './newRecipe.css'
 
 export function NewRecipe(props) {
-    const [nameRecipe, setNameRecipe] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [ingredients, setIngredients] = useState([{ "ingredient": "" }]);
     const [errorIngredients, setErrorIngredients] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [nameRecipe, setNameRecipe] = useState("");
+
+    const showModal = () => setIsModalOpen(true)
     const handleOk = () => {
         let ingredientToSend = ingredients.filter(ingredient => ingredient.ingredient !== "")
         ingredientToSend = ingredientToSend.map(ingredient => {
             return (ingredient.ingredient)
         })
         if (nameRecipe === "") {
-            setErrorIngredients("Indique el nombre de la reseta")
+            setErrorIngredients("Indique el nombre de la reseta.")
         } else {
-            const body = JSON.stringify({
+            const body = {
                 "recipe_name": nameRecipe,
                 "ingredients": ingredientToSend
-            })
+            }
             fetch(
                 "http://127.0.0.1:5000/reseta",
                 {
@@ -29,10 +28,9 @@ export function NewRecipe(props) {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: body
+                    body: JSON.stringify(body)
                 })
-            let tempRecipes0 = [props.recipes]
-            let tempRecipes = [...tempRecipes0]
+            let tempRecipes = [...props.recipes]
             tempRecipes.push(body)
             props.setRecipes(tempRecipes)
             setIsModalOpen(false);
@@ -44,7 +42,7 @@ export function NewRecipe(props) {
 
     const addIngredient = () => {
         if (ingredients[ingredients.length - 1].ingredient === "") {
-            setErrorIngredients("Escribe un ingrediente antes de agragar un campo nuevo")
+            setErrorIngredients("Escribe un ingrediente antes de agragar un nuevo campo.")
         } else {
             let temp = [...ingredients]
             temp.push({ "ingredient": "" })
@@ -54,9 +52,7 @@ export function NewRecipe(props) {
 
     const removeIngredient = (index) => {
         let temp = ingredients
-        console.log(temp);
         temp = temp.filter((ingredient) => ingredient.ingredient !== temp[index].ingredient)
-        console.log(temp);
         setIngredients(temp)
     }
 
@@ -68,12 +64,12 @@ export function NewRecipe(props) {
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
+            <Button className='btn-agregar-receta' type="primary" onClick={showModal}>
                 Agrear receta +
             </Button>
             <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <label>Nombre de la receta</label>
-                <input type="text" onChange={(event) => setNameRecipe(event.target.value)}/>
+                <input type="text" onChange={(event) => setNameRecipe(event.target.value)} />
                 <br></br>
                 <label>Ingredientes:</label>
                 {
@@ -81,15 +77,15 @@ export function NewRecipe(props) {
                         return (
                             <div key={index}>
                                 <input type="text" value={ingredients[index].ingredient} onChange={(event) => onChangeIngredients(event.target.value, index)}></input>
-                                <button onClick={() => removeIngredient(index)}>x</button>
+                                <button onClick={() => removeIngredient(index)}>X</button>
                             </div>
                         )
                     })
                 }
                 <button onClick={() => addIngredient()}>+ Agregar ingrediente</button>
                 {errorIngredients &&
-                    <div>
-                        <button onClick={() => setErrorIngredients(false)}>x</button>
+                    <div  className="error-create-recipe">
+                        <button onClick={() => setErrorIngredients(false)}>X</button>
                         <p>{errorIngredients}</p>
                     </div>
                 }
