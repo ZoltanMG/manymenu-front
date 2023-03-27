@@ -64,27 +64,26 @@ export function NewRecipe(props) {
 
     return (
         <>
-            <Button className='btn-agregar-receta' type="primary" onClick={showModal}>
-                Agrear receta +
+            <Button type="primary" onClick={showModal}>
+               Agregar receta +
             </Button>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <label>Nombre de la receta</label>
-                <input type="text" onChange={(event) => setNameRecipe(event.target.value)} />
+            <Modal title="Nueva receta" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <input className='input-text-standard name-receta' type="text" placeholder='Nombre de la receta' onChange={(event) => setNameRecipe(event.target.value)} />
                 <br></br>
                 <label>Ingredientes:</label>
                 {
                     ingredients.map((ingredient, index) => {
                         return (
-                            <div key={index}>
-                                <input type="text" value={ingredients[index].ingredient} onChange={(event) => onChangeIngredients(event.target.value, index)}></input>
-                                <button onClick={() => removeIngredient(index)}>X</button>
+                            <div key={index} >
+                                <button  className='btn-x-radius' onClick={() => removeIngredient(index)}>x</button>
+                                <input placeholder='Nuevo ingrediente' className='input-text-standard' type="text" value={ingredients[index].ingredient} onChange={(event) => onChangeIngredients(event.target.value, index)}></input>
                             </div>
                         )
                     })
                 }
-                <button onClick={() => addIngredient()}>+ Agregar ingrediente</button>
+                <button className='btn-agregar-ingrediente' onClick={() => addIngredient()}>+ Agregar ingrediente</button>
                 {errorIngredients &&
-                    <div  className="error-create-recipe">
+                    <div className="error-create-recipe">
                         <button onClick={() => setErrorIngredients(false)}>X</button>
                         <p>{errorIngredients}</p>
                     </div>
