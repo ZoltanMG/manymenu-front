@@ -19,7 +19,8 @@ export function NewRecipe(props) {
         } else {
             const body = {
                 "recipe_name": nameRecipe,
-                "ingredients": ingredientToSend
+                "ingredients": ingredientToSend,
+                "favorite": "false"
             }
             fetch(
                 "http://127.0.0.1:5000/reseta",
