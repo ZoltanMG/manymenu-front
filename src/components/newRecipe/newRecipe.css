@@ -84,3 +84,16 @@
     background-color: #ff4545;
     color: white;
 }
+
+.title-new-recipe {
+    display: flex;
+    align-items: center;
+}
+
+.title-new-recipe span {
+    color: tomato;
+    padding: 5px 0px;
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 5px;
+}

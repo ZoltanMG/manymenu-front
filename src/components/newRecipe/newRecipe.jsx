@@ -6,9 +6,16 @@ export function NewRecipe(props) {
     const [ingredients, setIngredients] = useState([{ "ingredient": "" }]);
     const [errorIngredients, setErrorIngredients] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [favorite, setFavorite] = useState(false);
     const [nameRecipe, setNameRecipe] = useState("");
 
     const showModal = () => setIsModalOpen(true)
+    const resetValues = () => {
+        setIngredients([{ "ingredient": "" }])
+        setFavorite(false)
+        setNameRecipe("")
+        console.log("reset");
+    }
     const handleOk = () => {
         let ingredientToSend = ingredients.filter(ingredient => ingredient.ingredient !== "")
         ingredientToSend = ingredientToSend.map(ingredient => {
@@ -20,7 +27,7 @@ export function NewRecipe(props) {
             const body = {
                 "recipe_name": nameRecipe,
                 "ingredients": ingredientToSend,
-                "favorite": "false"
+                "favorite": favorite
             }
             fetch(
                 "http://127.0.0.1:5000/reseta",
@@ -35,6 +42,8 @@ export function NewRecipe(props) {
             tempRecipes.push(body)
             props.setRecipes(tempRecipes)
             setIsModalOpen(false);
+            resetValues();
+            window.location.reload(true)
         }
     };
     const handleCancel = () => {
@@ -66,9 +75,13 @@ export function NewRecipe(props) {
     return (
         <>
             <Button type="primary" onClick={showModal}>
-               Agregar receta +
+                Agregar receta +
             </Button>
-            <Modal title="Nueva receta" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <div className='title-new-recipe'>
+                    <span onClick={() => setFavorite(!favorite)}>{favorite ? "★" : "✩"}</span>
+                    <h2>{nameRecipe === "" ? "Nueva receta" : nameRecipe}</h2>
+                </div>
                 <input className='input-text-standard name-receta' type="text" placeholder='Nombre de la receta' onChange={(event) => setNameRecipe(event.target.value)} />
                 <br></br>
                 <label>Ingredientes:</label>
@@ -76,7 +89,7 @@ export function NewRecipe(props) {
                     ingredients.map((ingredient, index) => {
                         return (
                             <div key={index} >
-                                <button  className='btn-x-radius' onClick={() => removeIngredient(index)}>x</button>
+                                <button className='btn-x-radius' onClick={() => removeIngredient(index)}>x</button>
                                 <input placeholder='Nuevo ingrediente' className='input-text-standard' type="text" value={ingredients[index].ingredient} onChange={(event) => onChangeIngredients(event.target.value, index)}></input>
                             </div>
                         )
