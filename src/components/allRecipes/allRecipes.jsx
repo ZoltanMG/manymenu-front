@@ -60,7 +60,7 @@ export function AllRecipes(props) {
                 <p onClick={showModal} >{recipe.recipe_name}</p>
                 <span className='favorite' onClick={() => handlerFavorite(recipe, index)}>{recipe.favorite ? "★" : "✩"}</span>
               </div>
-              <Modal okText={"Editar"} cancelText={"Eliminar"}  open={isModalOpen} onCancel={() => setIsModalOpen(false)} onOk={() => handleEdit(true)}>
+              <Modal okText={"Cerrar"} cancelText={"Editar"} closable={false} open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => handleEdit(true)}>
                 <h2>{recipe.recipe_name}</h2>
                 <div>
                 <h3>Ingredientes:</h3>
@@ -73,7 +73,7 @@ export function AllRecipes(props) {
                   }
                 </div>
               </Modal>
-              <Modal  closable={false} okText={"Guardar"} open={isModalOpenEdit} onOk={handleSave} onCancel={handleCancelEdit}>
+              <Modal okText={"Guardar"} open={isModalOpenEdit} onOk={handleSave} onCancel={handleCancelEdit}>
                 {/* <div className='title-new-recipe'>
                     <span onClick={() => setFavorite(!favorite)}>{favorite ? "★" : "✩"}</span>
                     <h2>{nameRecipe === "" ? "Nueva receta" : nameRecipe}</h2>

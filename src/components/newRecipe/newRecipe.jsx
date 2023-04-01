@@ -77,7 +77,7 @@ export function NewRecipe(props) {
             <Button type="primary" onClick={showModal}>
                 Agregar receta +
             </Button>
-            <Modal okText={"Crear receta"} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className='title-new-recipe'>
                     <span onClick={() => setFavorite(!favorite)}>{favorite ? "★" : "✩"}</span>
                     <h2>{nameRecipe === "" ? "Nueva receta" : nameRecipe}</h2>
